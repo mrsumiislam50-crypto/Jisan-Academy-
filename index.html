@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jisan Academy</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      color: #172033;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 7%;
+      background: white;
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    }
+    .logo { font-size: 22px; font-weight: bold; }
+    nav a {
+      margin-left: 18px;
+      text-decoration: none;
+      color: #172033;
+    }
+    .hero {
+      min-height: 75vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .hero h1 {
+      font-size: clamp(38px, 8vw, 68px);
+      margin: 0 0 15px;
+    }
+    .hero p {
+      font-size: 19px;
+      color: #5b6475;
+      max-width: 600px;
+      margin: 0 auto 28px;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    button, .whatsapp-btn {
+      padding: 14px 20px;
+      border: 0;
+      border-radius: 10px;
+      background: #4f46e5;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform .2s, opacity .2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    button:hover, .whatsapp-btn:hover { opacity: .9; transform: translateY(-2px); }
+    body.dark {
+      background: #111827;
+      color: #f9fafb;
+    }
+    body.dark nav, body.dark footer { background: #1f2937; }
+    body.dark nav a, body.dark .hero p { color: #e5e7eb; }
+    .menu-wrap {
+      position: relative;
+      display: inline-block;
+      margin-left: 12px;
+    }
+    .three-dot {
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      border-radius: 50%;
+      font-size: 24px;
+      line-height: 1;
+    }
+    .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 54px;
+      min-width: 210px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.15);
+      padding: 10px;
+      z-index: 10;
+      text-align: left;
+    }
+    .dropdown.show { display: block; }
+    .dropdown label,
+    .dropdown .menu-item {
+      display: block;
+      padding: 11px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #172033;
+      text-decoration: none;
+    }
+    .dropdown label:hover,
+    .dropdown .menu-item:hover { background: #f1f5f9; }
+    .dropdown input[type="file"] { display: none; }
+    .class-form {
+      display: none;
+      margin-top: 10px;
+      padding: 12px;
+      border-top: 1px solid #e5e7eb;
+    }
+    .class-form.show { display: block; }
+    .class-form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 8px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+    }
+    .class-form button {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+    }
+    body.dark .dropdown { background: #1f2937; }
+    body.dark .dropdown label,
+    body.dark .dropdown .menu-item { color: #f9fafb; }
+    body.dark .dropdown label:hover,
+    body.dark .dropdown .menu-item:hover { background: #374151; }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #697386;
+      background: white;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Jisan Academy 🎓</div>
+    <div>
+      <a href="#">হোম</a>
+      <a href="#about">আমার সম্পর্কে</a>
+
+      <div class="menu-wrap">
+        <button class="three-dot" onclick="toggleMenu()" aria-label="Menu">⋮</button>
+        <div id="dropdown" class="dropdown">
+          <label for="pdfInput">📄 PDF যোগ করুন</label>
+          <input id="pdfInput" type="file" accept=".pdf,application/pdf" onchange="addPDF(this)">
+
+          <div class="menu-item" onclick="toggleClassForm()">🎓 Class যোগ করুন</div>
+
+          <div id="classForm" class="class-form">
+            <input id="className" type="text" placeholder="Class-এর নাম লিখুন">
+            <button onclick="addClass()">Add Class</button>
+          </div>
+
+          <div id="classList"></div>
+          <div id="pdfList"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="hero">
+    <div>
+      <h1>Jisan Academy-তে আপনাকে স্বাগতম! 🎓</h1>
+      <p>Jisan Academy-তে শেখা, অনুশীলন এবং এগিয়ে যাওয়ার যাত্রা শুরু হোক। 🚀</p>
+      <div class="buttons">
+        <button onclick="showMessage()">👋 শুভেচ্ছা</button>
+        <button onclick="changeTitle()">✨ পরিবর্তন</button>
+        <button onclick="showAbout()">📖 About</button>
+        <a class="whatsapp-btn" href="https://wa.me/8801748435749" target="_blank" rel="noopener">💬 Customer Care WhatsApp</a>
+        <button onclick="toggleTheme()">🌙 Theme</button>
+      </div>
+    </div>
+  </main>
+
+  <section id="about" style="text-align:center;padding:40px 20px 70px;">
+    <h2>আমার সম্পর্কে</h2>
+    <p>আমি ওয়েব ডেভেলপমেন্ট শিখছি। 🚀</p>
+  </section>
+
+  <footer>© 2026 Jisan Academy</footer>
+
+  <script>
+    function showMessage() {
+      alert("দারুণ! তোমার ওয়েবসাইটের JavaScript কাজ করছে! 🎉");
+    }
+
+    function changeTitle() {
+      document.querySelector(".hero h1").textContent = "তুমি অসাধারণ! 🚀";
+    }
+
+    function showAbout() {
+      document.getElementById("about").scrollIntoView({behavior: "smooth"});
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+    }
+
+    function toggleMenu() {
+      document.getElementById("dropdown").classList.toggle("show");
+    }
+
+    function toggleClassForm() {
+      document.getElementById("classForm").classList.toggle("show");
+    }
+
+    function addClass() {
+      const input = document.getElementById("className");
+      const name = input.value.trim();
+      if (!name) {
+        alert("Class-এর নাম লিখুন।");
+        return;
+      }
+
+      const item = document.createElement("div");
+      item.className = "menu-item";
+      item.textContent = "🎓 " + name;
+      document.getElementById("classList").appendChild(item);
+      input.value = "";
+    }
+
+    function addPDF(input) {
+      if (!input.files.length) return;
+
+      const file = input.files[0];
+      const item = document.createElement("div");
+      item.className = "menu-item";
+      item.textContent = "📄 " + file.name;
+      document.getElementById("pdfList").appendChild(item);
+
+      alert(file.name + " যোগ করা হয়েছে।");
+      input.value = "";
+    }
+
+    document.addEventListener("click", function(event) {
+      const menu = document.querySelector(".menu-wrap");
+      if (!menu.contains(event.target)) {
+        document.getElementById("dropdown").classList.remove("show");
+      }
+    });
+  </script>
+
+</body>
+</html>
